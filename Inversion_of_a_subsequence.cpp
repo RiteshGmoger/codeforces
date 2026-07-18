@@ -21,26 +21,32 @@ using vvi = vector<vi>;
 
 void solve()
 {
-	int n{},m{}; cin>>n>>m;
-	vi a(n),b(m);
-	for(auto& it : a) cin>>it;
-	for(auto& it : b) cin>>it;
+	int n{}; cin>>n;
+	vi a(n),b(n);
+	int cnta{},cntb{};
+	for(auto& it : a)
+	{
+		cin>>it;
+		cnta += it;
+	}
+	for(auto& it : b)
+	{
+		cin>>it;
+		cntb += it;
+	}
 
-	unordered_map<int,int> mp{};
-	int v1{},v2{};
-
-	for(int i{};i<n;++i) mp[a[i]]++;
-	for(int i{};i<m;++i) mp[b[i]]++;
-
+	int one{},zero{};
 	for(int i{};i<n;++i)
-		if(mp[a[i]] > 1) v1++;
-	for(int i{};i<m;++i)
-		if(mp[b[i]] > 1) v2++;
+	{
+		if(a[i] == 1 && a[i] != b[i]) one++;
+		if(a[i] == 0 && a[i] != b[i]) zero++;
+	}
 
-	int one = n-v1;
-	int two = m-v2;
-
-	cout<<2*min(one,two)+(one<=two ? 1 : 2)<<'\n';
+	if(zero == 0 && one == 0) cout<<0<<'\n';
+	else if(cnta == 0) cout<<-1<<'\n';
+	else if(one%2 == 1) cout<<1<<'\n';
+	else if(cntb < n) cout<<2<<'\n';
+	else cout<<-1<<'\n';
 }
 
 int main()

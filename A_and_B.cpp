@@ -21,26 +21,51 @@ using vvi = vector<vi>;
 
 void solve()
 {
-	int n{},m{}; cin>>n>>m;
-	vi a(n),b(m);
-	for(auto& it : a) cin>>it;
-	for(auto& it : b) cin>>it;
+	int n{}; cin>>n;
+	string s{}; cin>>s;
 
-	unordered_map<int,int> mp{};
-	int v1{},v2{};
-
-	for(int i{};i<n;++i) mp[a[i]]++;
-	for(int i{};i<m;++i) mp[b[i]]++;
+	long long left{},right{},tmp{};
+	vi a{},b{};
 
 	for(int i{};i<n;++i)
-		if(mp[a[i]] > 1) v1++;
-	for(int i{};i<m;++i)
-		if(mp[b[i]] > 1) v2++;
+	{
+		if(s[i] == 'a') a.push_back(i);
+		else b.push_back(i);
+	}
+	if(a.empty() || b.empty())
+	{
+		cout<<0<<'\n';
+		return;
+	}
 
-	int one = n-v1;
-	int two = m-v2;
+	int v1 = a[a.size()/2];
+	int v2 = b[b.size()/2];
 
-	cout<<2*min(one,two)+(one<=two ? 1 : 2)<<'\n';
+	for(int i{v1+1};i<n;++i)
+	{
+		if(s[i] == 'a') left += tmp;
+		else tmp++;
+	}
+	tmp = 0;
+	for(int i{v1-1};i>=0;--i)
+	{
+		if(s[i] == 'a') left += tmp;
+		else tmp++;
+	}
+	tmp = 0;
+	for(int i{v2+1};i<n;++i)
+	{
+		if(s[i] == 'b') right += tmp;
+		else tmp++;
+	}
+	tmp = 0;
+	for(int i{v2-1};i>=0;--i)
+	{
+		if(s[i] == 'b') right += tmp;
+		else tmp++;
+	}
+
+	cout<<min(left,right)<<'\n';
 }
 
 int main()

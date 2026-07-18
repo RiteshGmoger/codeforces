@@ -21,26 +21,22 @@ using vvi = vector<vi>;
 
 void solve()
 {
-	int n{},m{}; cin>>n>>m;
-	vi a(n),b(m);
-	for(auto& it : a) cin>>it;
-	for(auto& it : b) cin>>it;
+	ll n{},m{},k{}; cin>>n>>k>>m;
 
-	unordered_map<int,int> mp{};
-	int v1{},v2{};
+	if(m < k)
+	{
+		cout<<"No\n";
+		return;
+	}
+	cout<<"Yes\n";
+	vi ans(k);
 
-	for(int i{};i<n;++i) mp[a[i]]++;
-	for(int i{};i<m;++i) mp[b[i]]++;
+	for(int i{};i<(int)k-1;++i) ans[i] = 1;
+	ans[k-1] = m-k+1;
 
-	for(int i{};i<n;++i)
-		if(mp[a[i]] > 1) v1++;
-	for(int i{};i<m;++i)
-		if(mp[b[i]] > 1) v2++;
-
-	int one = n-v1;
-	int two = m-v2;
-
-	cout<<2*min(one,two)+(one<=two ? 1 : 2)<<'\n';
+	for(int i{};i<(int)k;++i) cout<<ans[i]<<' ';
+	for(int i=k;i<(int)n;++i) cout<<ans[i%k]<<' ';
+	cout<<'\n';
 }
 
 int main()
