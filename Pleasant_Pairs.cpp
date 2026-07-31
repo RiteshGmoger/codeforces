@@ -5,37 +5,37 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int T;
-    cin >> T;
+    int t;
+    cin >> t;
 
-    while (T--) {
+    while (t--) {
         int n;
         cin >> n;
 
-        vector<int> a(n + 1), pos(2 * n + 1, 0);
+        vector<int> pos(2 * n + 1, 0);
 
         for (int i = 1; i <= n; i++) {
-            cin >> a[i];
-            pos[a[i]] = i;
+            int x;
+            cin >> x;
+            pos[x] = i;
         }
 
         long long ans = 0;
 
-        for (int i = 1; i <= n; i++) {
-            // smallest multiple of a[i] that is > a[i]
-            for (int prod = 2 * a[i]; prod <= 2 * n; prod += a[i]) {
-                int other = prod / a[i];
+        for (int x = 1; x <= 2 * n; x++) {
+            if (pos[x] == 0) continue;
 
-                if (other > 2 * n || pos[other] == 0)
-                    continue;
+            for (int y = 1; x * y <= 2 * n; y++) {
+                if (y <= x) continue;      // avoid duplicates and self-pairs
+                if (pos[y] == 0) continue;
 
-                int j = pos[other];
-
-                if (i < j && i + j == prod)
+                if (pos[x] + pos[y] == x * y)
                     ans++;
             }
         }
 
         cout << ans << '\n';
     }
+
+    return 0;
 }
