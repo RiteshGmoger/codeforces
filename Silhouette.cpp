@@ -22,24 +22,9 @@ using vvi = vector<vi>;
 void solve()
 {
 	int n{}; cin>>n;
-	string s{}; cin>>s;
+	vll b(n); for(auto& it : b) cin>>it;
 
-	int ans{1};
-	for(int i{1};i<n;++i)
-		if(s[i] != s[i-1]) ans++;
-
-	int best = ans;
-
-	for(int i{1}; i < n-1; i++)
-	{
-    		if(s[i] != s[i-1] && s[i] != s[i+1])
-		{
-        		if(s[i-1] == s[i+1]) best = min(best, ans - 2);
-        		else best = min(best, ans - 1);
-    		}
-	}
-
-	cout<<best<<'\n';
+	s
 }
 
 int main()

@@ -22,24 +22,50 @@ using vvi = vector<vi>;
 void solve()
 {
 	int n{}; cin>>n;
-	string s{}; cin>>s;
+	string a{},b{}; cin>>a>>b;
 
-	int ans{1};
-	for(int i{1};i<n;++i)
-		if(s[i] != s[i-1]) ans++;
-
-	int best = ans;
-
-	for(int i{1}; i < n-1; i++)
+	if(n < 3)
 	{
-    		if(s[i] != s[i-1] && s[i] != s[i+1])
+		for(int i{};i<n;++i)
 		{
-        		if(s[i-1] == s[i+1]) best = min(best, ans - 2);
-        		else best = min(best, ans - 1);
-    		}
+			if(a[i] != b[i])
+			{
+				cout<<"-1\n";
+				return;
+			}
+		}
+		cout<<"0\n";
+		return;
 	}
 
-	cout<<best<<'\n';
+	vector<int> aeven{},aodd{},beven{},bodd{};
+	for(int i{};i<n;++i)
+	{
+		if(a[i] == '1')
+		{
+			if(i%2 == 1) aeven.pb(i);
+			else aodd.pb(i);
+		}
+		if(b[i] == '1')
+		{
+			if(i%2 == 1) beven.pb(i);
+			else bodd.pb(i);
+		}
+	}
+
+	if(aeven.size() != beven.size() || aodd.size() != bodd.size())
+	{
+		cout<<"-1\n";
+		return;
+	}
+
+	ll val{};
+	for(int i{};i<(int)aeven.size();++i)
+		val += llabs((ll)aeven[i] - beven[i])/2;
+	for(int i{};i<(int)aodd.size();++i)
+		val += llabs((ll)aodd[i] - bodd[i])/2;
+
+	cout<<val<<'\n';
 }
 
 int main()

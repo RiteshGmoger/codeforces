@@ -22,24 +22,39 @@ using vvi = vector<vi>;
 void solve()
 {
 	int n{}; cin>>n;
-	string s{}; cin>>s;
+	string a{},b{}; cin>>a>>b;
 
-	int ans{1};
-	for(int i{1};i<n;++i)
-		if(s[i] != s[i-1]) ans++;
-
-	int best = ans;
-
-	for(int i{1}; i < n-1; i++)
+	if(n < 3)
 	{
-    		if(s[i] != s[i-1] && s[i] != s[i+1])
+		for(int i{};i<n;++i)
 		{
-        		if(s[i-1] == s[i+1]) best = min(best, ans - 2);
-        		else best = min(best, ans - 1);
-    		}
+			if(a[i] != b[i])
+			{
+				cout<<"No\n";
+				return;
+			}
+		}
+		cout<<"Yes\n";
+		return;
+	}
+	int aoone{},aeone{},beone{},boone{};
+
+	for(int i{};i<n;++i)
+	{
+		if(a[i] == '1')
+		{
+			if(i%2 == 0) aoone++;
+			else aeone++;
+		}
+		if(b[i] == '1')
+		{
+			if(i%2 == 0) boone++;
+			else beone++;
+		}
 	}
 
-	cout<<best<<'\n';
+	if(aeone == beone && aoone == boone) cout<<"Yes\n";
+	else cout<<"No\n";
 }
 
 int main()
