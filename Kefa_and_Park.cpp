@@ -22,24 +22,28 @@ int ans{};
 
 void dfs(vi& a,int m,int cnt,int cur,int par,vvi& adj)
 {
+	if(cnt > m) return;
+
 	bool leaf = true;
 
-    	for(auto& it : adj[cur])
-    	{
-        	if(it == par) continue;
+	for(auto& it : adj[cur])
+	{
+		if(it == par) continue;
 
-	        leaf = false;
+		leaf = false;
 
-        	if(a[it-1] == 1) dfs(a,m,cnt+1,it,cur,adj);
-        	else dfs(a,m,0,it,cur,adj);
-    	}
+		if(a[it-1] == 1) dfs(a,m,cnt+1,it,cur,adj);
+		else dfs(a,m,0,it,cur,adj);
+	}
 
-    	if(leaf && cnt <= m) ans++;
+	if(leaf) ans++;
 }
 
 void solve()
 {
 	int n{},m{}; cin>>n>>m;
+	ans = 0;
+
 	vi a(n); for(auto& it : a) cin>>it;
 	vvi adj(n+1);
 
@@ -52,7 +56,7 @@ void solve()
 	int val{};
 	if(a[0] == 1) val = 1;
 
-	dfs(a,m,val,1,adj);
+	dfs(a,m,val,1,0,adj);
 
 	cout<<ans<<'\n';
 }
