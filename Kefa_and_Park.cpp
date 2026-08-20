@@ -20,19 +20,21 @@ using vvi = vector<vi>;
 
 int ans{};
 
-void dfs(vi& a,int m,int cnt,int cur,vvi& adj)
+void dfs(vi& a,int m,int cnt,int cur,int par,vvi& adj)
 {
-	if(adj[cur].empty())
-	{
-		if(cnt <= m) ans++;
-		return;
-	}
+	bool leaf = true;
 
-	for(auto& it : adj[cur])
-	{
-		if(a[it-1] == 1) dfs(a,m,cnt+1,it,adj);
-		else dfs(a,m,0,it,adj);
-	}
+    	for(auto& it : adj[cur])
+    	{
+        	if(it == par) continue;
+
+	        leaf = false;
+
+        	if(a[it-1] == 1) dfs(a,m,cnt+1,it,cur,adj);
+        	else dfs(a,m,0,it,cur,adj);
+    	}
+
+    	if(leaf && cnt <= m) ans++;
 }
 
 void solve()
@@ -45,6 +47,7 @@ void solve()
 	{
 		int a{},b{}; cin>>a>>b;
 		adj[a].pb(b);
+		adj[b].pb(a);
 	}
 	int val{};
 	if(a[0] == 1) val = 1;
